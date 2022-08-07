@@ -1,12 +1,13 @@
 import User from "../models/User";
 import jwt from "jsonwebtoken";
 
-const jwtSecreteKey = process.env.JWT_SECRET_KEY!;
-
 export const generateToken = (user: User) => {
-  return jwt.sign(user, jwtSecreteKey);
+  const jwtSecreteKey = process.env.JWT_SECRET_KEY!;
+  console.log(jwtSecreteKey);
+  return jwt.sign({ user }, jwtSecreteKey);
 };
 
 export const verifyToken = (token: string): User | null => {
+  const jwtSecreteKey = process.env.JWT_SECRET_KEY!;
   return jwt.verify(token, jwtSecreteKey) as User;
 };
