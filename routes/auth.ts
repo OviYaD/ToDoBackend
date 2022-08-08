@@ -9,11 +9,7 @@ const router = Router();
 router.post("/login", async (req, res) => {
   try {
     const user = req.body as User;
-    console.log(user);
-    // user.password = await bcrypt.hash(user.password, 10);
     const userFromDB = await collections.users?.findOne({ email: user.email });
-    console.log(user.password, userFromDB?.password);
-    // const result = await collections.users?.findOne(user);
     const isValid = await bcrypt.compare(user.password, userFromDB?.password);
     if (isValid) {
       const newUser = new User(
@@ -22,7 +18,6 @@ router.post("/login", async (req, res) => {
         userFromDB?.name,
         userFromDB?._id
       );
-      console.log(newUser);
 
       const token: string = generateToken(newUser);
       res.status(200).send({ token });
@@ -48,7 +43,6 @@ router.post("/register", async (req, res) => {
         user?.name,
         result?.insertedId
       );
-      console.log(newUser);
 
       const token: string = generateToken(newUser);
       res.status(201).send({ token });

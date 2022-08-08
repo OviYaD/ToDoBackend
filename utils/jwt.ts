@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 
 export const generateToken = (user: User) => {
   const jwtSecreteKey = process.env.JWT_SECRET_KEY!;
-  console.log(jwtSecreteKey);
   return jwt.sign({ user }, jwtSecreteKey);
 };
 
